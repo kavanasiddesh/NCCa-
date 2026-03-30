@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCC Attendance Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .card { background: white; max-width: 400px; margin: auto; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .logo { width: 100px; margin-bottom: 10px; }
+        h2 { color: #2c3e50; margin-bottom: 5px; }
+        p.group-details { color: #7f8c8d; font-size: 0.9em; margin-bottom: 20px; }
+        .form-group { text-align: left; margin-bottom: 15px; }
+        input[type="text"], select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #25D366; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        button:hover { background-color: #128C7E; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/National_Cadet_Corps_%28India%29_logo.png/600px-National_Cadet_Corps_%28India%29_logo.png" alt="NCC Logo" class="logo">
+        
+        <h2>NCC Attendance</h2>
+        <p class="group-details">
+            <strong>Group:</strong> [Bellary]<br>
+            <strong>Unit:</strong> [3KAR Engineering company]
+        </p>
+
+        <div class="form-group">
+            <label>Cadet Name</label>
+            <input type="text" id="cadetName" placeholder="Enter Full Name">
+        </div>
+
+        <div class="form-group">
+            <label>Regimental Number</label>
+            <input type="text" id="regNo" placeholder="e.g. KA/24/SD/A/123456">
+        </div>
+
+        <div class="form-group">
+            <label>Attendance Status</label>
+            <select id="status">
+                <option value="PRESENT">✅ PRESENT</option>
+                <option value="ABSENT">❌ ABSENT</option>
+            </select>
+        </div>
+
+        <button onclick="sendToWhatsApp()">Send to WhatsApp</button>
+    </div>
+
+    <script>
+        function sendToWhatsApp() {
+            const phoneNumber = "919036351517"; // Replace with the CO's or Senior's number (with country code)
+            const name = document.getElementById('cadetName').value;
+            const reg = document.getElementById('regNo').value;
+            const status = document.getElementById('status').value;
+
+            if(name === "" || reg === "") {
+                alert("Please fill all details!");
+                return;
+            }
+
+            const message = `*NCC ATTENDANCE REPORT*%0A` +
+                            `--------------------------%0A` +
+                            `*Name:* ${name}%0A` +
+                            `*Reg No:* ${reg}%0A` +
+                            `*Status:* ${status}%0A` +
+                            `*Date:* ${new Date().toLocaleDateString()}`;
+
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>
